@@ -1,0 +1,29 @@
+# -*- coding: utf-8 -*-
+{
+    'name': "pym_contacts",
+
+    'summary': """
+        Personalizacion Contactos para Pernos y Mas
+        """,
+
+    'description': """
+        Personalizacion Contactos para Pernos y Mas
+    """,
+
+    'author': "Kodice S.A.",
+    'website': "http://www.kodice.com.ec",
+
+    # Categories can be used to filter modules in modules listing
+    # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
+    # for the full list
+    'category': 'Sale',
+    'version': '0.1',
+
+    # any module necessary for this one to work correctly
+    'depends': ['contacts', 'l10n_ec',
+    ],
+    # always loaded
+    'data': [
+        'data/l10n_latam.identification.type.csv',
+    ],
+}
