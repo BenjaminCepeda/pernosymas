@@ -1,12 +1,28 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, _
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from . import pym_util
 
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
+
+    @api.model
+    def _get_default_country(self):
+        country = self.env['res.country'].search([('code', '=', 'EC')],
+                                                 limit=1)
+        return country
+
+    country_id = fields.Many2one('res.country', string='Country',
+                                 default=_get_default_country)
+    # @api.model
+    # def _get_default_l10n_latam_identification_type_id(self):
+    #     ruc_vat_type = self.env.ref('pym_contacts.ec_ruc')
+    #     return ruc_vat_type
+    #
+    # l10n_latam_identification_type_id =\
+    #     _get_default_l10n_latam_identification_type_id
 
     def check_vat_ec(self, vat):
         l = len(vat)
