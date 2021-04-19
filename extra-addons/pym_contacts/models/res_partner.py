@@ -16,13 +16,15 @@ class ResPartner(models.Model):
 
     country_id = fields.Many2one('res.country', string='Country',
                                  default=_get_default_country)
-    # @api.model
-    # def _get_default_l10n_latam_identification_type_id(self):
-    #     ruc_vat_type = self.env.ref('pym_contacts.ec_ruc')
-    #     return ruc_vat_type
-    #
-    # l10n_latam_identification_type_id =\
-    #     _get_default_l10n_latam_identification_type_id
+
+    @api.onchange('country_id')
+    def _onchange_country(self):
+        country = self.country_id or self.company_id.country_id or self.env.company.country_id
+        ec_code = self.env['res.country'].search([('code', '=', 'EC')],
+                                                 limit=1)
+        if country == ec_code:
+            self.l10n_latam_identification_type_id =\
+                self.env.ref('pym_contacts.ec_ruc')
 
     def check_vat_ec(self, vat):
         l = len(vat)
@@ -40,10 +42,14 @@ class ResPartner(models.Model):
                             self.l10n_latam_identification_type_id == ruc_vat_type)):
                     #raise ValidationError(_('Invalid  VAT number must contain only numeric characters'))
                     raise ValidationError(
-                        _('invalid ID number '))
+                        _('invalid ID length '))
             if self.l10n_latam_identification_type_id == ced_vat_type:
-                return pym_util.PymUtil.verificar(vat)
+                mod9=pym_util.PymUtil.verificar(vat)
+                if not mod9:
+                    raise ValidationError(_('invalid ID number '))
             elif self.l10n_latam_identification_type_id == ruc_vat_type and \
                     vat != '9999999999999':
-                return pym_util.PymUtil.verificar(vat)
+                mod9= pym_util.PymUtil.verificar(vat)
+                if not mod9:
+                    raise ValidationError(_('invalid ID number '))
         return True
