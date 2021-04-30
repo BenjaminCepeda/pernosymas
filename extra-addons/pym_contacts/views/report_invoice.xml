@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document_pym_custom" inherit_id="account.report_invoice_document" >
+        <!-- remove default partner address -->
+        <t t-set="address" position="replace"/>
+
+        <!-- remove default document title -->
+        <h2 position="replace"/>
+
+    </template>
+</odoo>
+
+
