@@ -20,12 +20,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['contacts','l10n_ec',
+    'depends': ['contacts',
+                'l10n_ec',
                 "account",
                 ],
     # always loaded
     'data': [
-        'data/l10n_latam.identification.type.csv',
-        'views/report_invoice.xml',
+        'data/l10n_latam_identification_type_data.xml',
+        'views/report.xml',
     ],
 }

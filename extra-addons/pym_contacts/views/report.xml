@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- QWeb Reports -->
+<!-- NAME & FILE_NAME should be the same -->
+<odoo>
+        <report
+            id="pre_printed_invoice"
+            string="Reporte Pre-impreso"
+            model="account.move"
+            report_type="qweb-html"
+            name="pym_contacts.pre_printed_invoice_template"
+        />
+
+        <template id="pre_printed_invoice_template" inherit_id="account.report_invoice_document">
+            <xpath expr="//div[hasclass('page')]" position="after">
+                <t t-if="o.company_id.company_cop">
+                    <div style="border-bottom:2px solid;height:120px;width:320px; align:left; padding-bottom:122px !important;">
+                        <img t-att-src="image_data_uri(o.company_id.company_cop)" alt="company_cop"
+                             style="width:auto;height:120px;"/>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+</odoo>

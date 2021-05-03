@@ -17,12 +17,11 @@ msgstr ""
 "Plural-Forms: \n"
 "Generated-By: pygettext.py 1.5\n"
 
-
-#: res_partner.py:20
 msgid "Id must only contain numbers"
-msgstr "Número de identificación debe contener solamente números "
+msgstr "Número de identificación debe contener solamente números"
 
-#: res_partner.py:27
-msgid "invalid ID number "
-msgstr "Número de identificación inválido"
+msgid "invalid ID length"
+msgstr "Longitud de la Identificación inválida"
 
+msgid "invalid ID number"
+msgstr "Número de identificación inválida"
