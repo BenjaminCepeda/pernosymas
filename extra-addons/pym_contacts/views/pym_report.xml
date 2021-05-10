@@ -2,7 +2,7 @@
 
 <odoo>
     <data>
-        <record id="a5_low_margin" model="report.paperformat">
+        <record id="pym_contacts.a5_low_margin" model="report.paperformat">
             <field name="name">A5 Low margin Format</field>
             <field name="default" eval="True"/>
             <field name="format">A5</field>
@@ -17,7 +17,7 @@
             <field name="header_spacing">0</field>
             <field name="dpi">90</field>
         </record>
-        <record id="pre_printed_invoice" model="ir.actions.report">
+        <record id="pym_contacts.pre_printed_invoice" model="ir.actions.report">
             <field name="name">Factura Pre-impresa</field>
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
@@ -28,31 +28,33 @@
             <field name="binding_type">report</field>
             <field name="paperformat_id" ref="pym_contacts.a5_low_margin" />
         </record>
-    <template id="custom_header">
-        <div>
-            <div class="row">
-                <div class="col-1" style="padding-left: 0px;width: 100mm;"/>
-                <div class="col-4" style="padding-left: 0px;width: 600mm;">
+    <template id="pym_contacts.custom_header">
+        <div style="font-size: 17pt;font-family:Verdana,Arial,sans;letter-spacing: 0.3em">
+            <div class="row" style="font-size: 17pt;font-family:Verdana;letter-spacing: 0.3em">
+                <div style="padding-left: 0mm;width: 25mm;"/>
+                <div style="padding-left: 0mm;width: 135mm;">
                         <span t-field="o.invoice_date"/>
                 </div>
-                <div class="col-1" style="padding-left: 0px;width: 250mm;"/>
-                <div class="col-4" style="padding-left: 0px;width: 300mm;">
+                <div style="padding-left: 0mm;width: 40mm;"/>
+                <div style="padding-left: 0mm;width: 50mm;">
                         <span t-field="o.partner_id.vat"/>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-1" style="padding-left: 0px;width: 100mm;"/>
-                <div class="col-8" style="padding-left: 0px;width: 1200mm;">
+            <div class="row" style="font-size: 17pt;font-family:Verdana;letter-spacing: 0.3em">
+                <div style="padding-left: 0px;width: 25mm"/>
+                <div style="padding-left: 0px;width: 240mm;">
                         <span t-field="o.partner_id.name"/>
                 </div>
             </div>
             <div class="row">
-                <div class="col-1" style="padding-left: 0px;width: 150mm;"/>
-                <div  style="padding-left: 0px;width: 700mm;">
-                    <span t-field="o.partner_id.street"/><span t-field="o.partner_id.street2"/>
+
+                <div  style="padding-left: 0px;width: 40mm;"/>
+                <div  style="padding-left: 0px;width: 160mm;">
+                    <span t-field="o.partner_id.street"/>
+                    <span t-field="o.partner_id.street2"/>
                 </div>
-                <div class="col-1" style="padding-left: 0px;width: 100mm;"/>
-                <div style="padding-left: 0px;width: 300mm;">
+                <div style="padding-left: 0px;width: 15mm;"/>
+                <div style="padding-left: 0px;width: 50mm;">
                     <span t-field="o.partner_id.phone"/><span t-field="o.partner_id.mobile"/>
                 </div>
             </div>
@@ -60,7 +62,7 @@
         <br/>
     </template>
 
-        <template id="report_pre_printed_invoice" inherit_id="account.report_invoice_document" primary="True">
+        <template id="pym_contacts.report_pre_printed_invoice" inherit_id="account.report_invoice_document" primary="True">
             <t t-set="o" position="after">
             <t t-set="custom_header" t-value="'pym_contacts.custom_header'"/>
             <br/>
@@ -72,10 +74,9 @@
 
         </template>
     <!-- FIXME: Temp fix to allow fetching invoice_documemt in Studio Reports with localisation -->
-    <template id="report_invoice" inherit_id="account.report_invoice">
+    <template id="pym_contacts.report_invoice" inherit_id="account.report_invoice">
         <xpath expr='//t[@t-call="account.report_invoice_document"]' position="replace">
-            <t
-                t-call="pym_contacts.report_pre_printed_invoice" t-lang="lang"/>
+            <t t-call="pym_contacts.report_pre_printed_invoice" t-lang="lang"/>
         </xpath>
     </template>
     </data>
