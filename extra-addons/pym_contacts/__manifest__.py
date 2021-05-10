@@ -27,6 +27,6 @@
     # always loaded
     'data': [
         'data/l10n_latam_identification_type_data.xml',
-        'views/report.xml',
+        'views/pym_report.xml',
     ],
 }
