@@ -14,9 +14,6 @@ class ResPartner(models.Model):
                                                  limit=1)
         return country
 
-    country_id = fields.Many2one('res.country', string='Country',
-                                 default=_get_default_country)
-
     @api.onchange('country_id')
     def _onchange_country(self):
         country = self.country_id or self.company_id.country_id or self.env.company.country_id
@@ -53,3 +50,10 @@ class ResPartner(models.Model):
                 if not mod9:
                     raise ValidationError(_('invalid ID number '))
         return True
+
+    def _get_direccion(self):
+        self.direccion = self.street + ' ' + self.street2
+
+    country_id = fields.Many2one('res.country', string='Country',
+                                 default=_get_default_country)
+    direccion=fields.Char(compute=_get_direccion, string='Dirección completa')
