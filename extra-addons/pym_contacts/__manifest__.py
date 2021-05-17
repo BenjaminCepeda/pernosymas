@@ -28,5 +28,6 @@
     'data': [
         'data/l10n_latam_identification_type_data.xml',
         'views/pym_report.xml',
+        'views/account_move_view.xml'
     ],
 }
