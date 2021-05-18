@@ -7,13 +7,11 @@
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
 			<group id="other_tab_group" position="inside">
-    			<group id="sale_info_group" position="inside">
-                    <label for="physical_invoice_number" string="No. factura física"/>
-                    <div>
-
-
-                        <field name="physical_invoice_number" class="oe_inline"/>
-                    </div>
+    			<group id="sale_info_group" position="before">
+                        <label for="physical_invoice_number" string="No. factura física"/>
+                        <div>
+                            <field name="physical_invoice_number" class="oe_inline"/>
+                        </div>
                 </group>
             </group>
         </field>
