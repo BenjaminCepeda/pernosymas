@@ -3,11 +3,11 @@
     'name': "pym_contacts",
 
     'summary': """
-        Personalizacion Contactos para Pernos y Mas
+        Personalizacion Pernos y Mas, localización, factura preimpresa
         """,
 
     'description': """
-        Personalizacion Contactos para Pernos y Mas
+        Personalizacion Pernos y Mas
     """,
 
     'author': "Kodice S.A.",
@@ -27,6 +27,7 @@
     # always loaded
     'data': [
         'data/l10n_latam_identification_type_data.xml',
+        'data/res_partner_data.xml',
         'views/pym_report.xml',
         'views/account_move_view.xml',
         'views/view_out_invoice_tree.xml',

@@ -5,6 +5,16 @@ l10n_latam_base.it_pass	Passport	90				#Pasaporte
 l10n_latam_base.it_fid	Foreign ID	100				#Identificacion del Exterior
 -->
 <data noupdate="1">
+    <record id='l10n_latam_base.it_vat' model='l10n_latam.identification.type'>
+        <field name='name'>VAT</field>
+        <field name='sequence'>80</field>
+        <field name='active'>false</field>
+    </record>
+    <record id='l10n_latam_base.it_pass' model='l10n_latam.identification.type'>
+        <field name='name'>Passport</field>
+        <field name='sequence'>90</field>
+        <field name='active'>true</field>
+    </record>
     <record id='pym_contacts.ec_ruc' model='l10n_latam.identification.type'>
         <field name='name'>RUC</field>
         <field name='description'>REGISTRO UNICO DE CONTRIBUYENTE</field>
