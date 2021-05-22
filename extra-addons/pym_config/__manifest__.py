@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "pym_contacts",
+    'name': "pym_config",
 
     'summary': """
         Personalizacion Pernos y Mas, localización, factura preimpresa
