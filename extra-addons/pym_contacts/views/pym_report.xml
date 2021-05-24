@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="pym_contacts.a5_low_margin" model="report.paperformat">
+            <field name="name">A5 Low margin Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A5</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">3</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">240</field>
+        </record>
+        <record id="pym_contacts.pre_printed_invoice" model="ir.actions.report">
+            <field name="name">Factura Pre-impresa</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pym_contacts.report_invoice</field>
+            <field name="report_file">pym_contacts.report_invoice</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="pym_contacts.a5_low_margin" />
+        </record>
+    <template id="pym_contacts.custom_header">
+        <div style="width: 120mm;height: 72mm;"/>
+        <div style="height: 40mm; font-family:'Arial','sans-serif';font-size: 16pt;line-height: 2.5;letter-spacing: 2.6pt;">
+            <div class="row">
+                <div style="padding-left: 0mm;width: 20mm;"/>
+                <div style="padding-left: 0mm;width: 150mm;">
+                        <span t-field="o.invoice_date"/>
+                </div>
+                <div style="padding-left: 0mm;width: 40mm;"/>
+                <div style="padding-left: 0mm;width: 70mm;">
+                        <span t-field="o.partner_id.vat"/>
+                </div>
+            </div>
+            <div class="row" >
+                <div style="padding-left: 0mm;width: 20mm"/>
+                <div style="padding-left: 0mm;width: 240mm;">
+                        <span t-field="o.partner_id.name"/>
+                </div>
+            </div>
+            <div class="row">
+                <div  style="padding-left: 0px;width: 28mm;"/>
+                <div  style="padding-left: 0px;width: 165mm;">
+                    <span t-field="o.partner_id.direccion"/>
+                </div>
+                <div style="padding-left: 0px;width: 40mm;"/>
+                <div style="padding-left: 0px;width: 80mm;">
+                    <span t-field="o.partner_id.phone"/><span t-field="o.partner_id.mobile"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="pym_contacts.report_pre_printed_invoice" inherit_id="account.report_invoice_document" primary="True">
+            <t t-set="o" position="before">
+                <t t-set="custom_header" t-value="'pym_contacts.custom_header'"/>
+                <t t-set="custom_footer"><div></div></t>
+            </t>
+            <t t-set="address" position="replace"/>
+
+
+            <!-- remove default document title -->
+            <h2 position="replace"/>
+            <xpath expr='//div[@id="informations"]' position="replace">
+                <div id="informations">
+                </div>
+            </xpath>
+
+            <xpath expr='//table[@name="invoice_line_table"]' position="replace">
+                <div style="width:140mm; height:75mm"/>
+                <div  style="height:164mm;font-family:'Arial','sans-serif';font-size: 10pt;line-height: 2;letter-spacing: 2.3pt;">
+                    <table name="invoice_line_table" >
+                        <tbody >
+                            <t t-set="current_subtotal" t-value="0"/>
+                            <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
+                            <t t-foreach="lines" t-as="line">
+                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                                <tr>
+                                    <t t-if="not line.display_type" name="account_invoice_line_accountable">
+                                        <td class="text-right" style="width: 20mm;">
+                                            <span t-field="line.quantity"/>
+                                        </td>
+                                        <td style="width: 8mm;"/>
+                                        <td name="account_invoice_line_name" style="width: 95mm;"><span t-field="line.name"/></td>
+                                        <t t-if="display_discount" >
+                                            <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}" style="width: 15mm;">
+                                                <span class="text-nowrap" t-field="line.discount"/>
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td style="width: 15mm;"/>
+                                        </t>
+                                        <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}" style="width: 22mm;">
+                                            <span class="text-nowrap" t-field="line.price_unit"/>
+                                        </td>
+                                        <td class="text-right o_price_total" style="width: 30mm;">
+                                            <span class="text-nowrap" t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="width: 140mm;height: 25mm;"/>
+            </xpath>
+            <xpath expr='//div[@id="total"]' position="replace">
+                <div id="total" style="border: 1px solid black;font-family:'Arial','sans-serif';font-size: 10pt;line-height: 2;letter-spacing: 2.3pt;">
+                        <table >
+                            <tr>
+                                <td style="width: 150mm;height: 7mm;"/>
+                                <td class="text-right"  style="width: 40mm;height: 7mm;">
+                                    <span t-field="o.amount_untaxed"/>
+                                </td>
+                            </tr>
+                            <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                                <tr>
+                                    <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) in [0, 1] and o.amount_untaxed == amount_by_group[2]">
+                                        <td class="text-right" style="width: 150mm;height: 7mm;"><span class="text-nowrap" t-esc="amount_by_group[0]"/></td>
+                                        <td class="text-right" style="width: 40mm;height: 7mm;">
+                                            <span class="text-nowrap" t-esc="amount_by_group[3]" />
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td style="width: 150mm;height: 7mm;">
+                                            <span t-esc="amount_by_group[0]"/>
+                                            <span class="text-nowrap"> on
+                                                <t t-esc="amount_by_group[4]"/>
+                                            </span>
+                                        </td>
+                                        <td class="text-right" style="width: 45mm;height: 7mm;">
+                                            <span class="text-nowrap" t-esc="amount_by_group[3]"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td style="width: 150mm;height: 7mm;"/>
+                                <td class="text-right" style="width: 40mm;height: 7mm;">
+                                    <span class="text-nowrap" t-field="o.amount_total"/>
+                                </td>
+                            </tr>
+                        </table>
+                </div>
+            </xpath>
+            <xpath expr='//p[@name="payment_communication"]' position="replace"/>
+            <xpath expr='//p[@name="payment_term"]' position="replace"/>
+            <xpath expr='//p[@name="comment"]' position="replace"/>
+            <xpath expr='//p[@name="note"]' position="replace"/>
+            <xpath expr='//p[@name="incoterm"]' position="replace"/>
+    </template>
+    <!-- FIXME: Temp fix to allow fetching invoice_documemt in Studio Reports with localisation -->
+    <template id="pym_contacts.report_invoice" inherit_id="account.report_invoice">
+        <xpath expr='//t[@t-call="account.report_invoice_document"]' position="replace">
+                <t t-call="pym_contacts.report_pre_printed_invoice" t-lang="lang"/>
+        </xpath>
+    </template>
+    </data>
+</odoo>
