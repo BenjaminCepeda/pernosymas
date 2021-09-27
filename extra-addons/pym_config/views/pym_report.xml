@@ -10,7 +10,7 @@
             <field name="page_width">0</field>
             <field name="orientation">Portrait</field>
             <field name="margin_top">10</field>
-            <field name="margin_bottom">3</field>
+            <field name="margin_bottom">0</field>
             <field name="margin_left">7</field>
             <field name="margin_right">7</field>
             <field name="header_line" eval="False" />
@@ -30,31 +30,30 @@
         </record>
 
     <template id="pym_config.custom_header">
-
-            <div style="position:absolute;left: 0mm;top: 54mm;border: 1px solid green;width:240mm;height: 35mm;font-family:'Arial','sans-serif';font-size: 12pt;line-height: 2.5;letter-spacing: 2.3pt;">
+            <div style="position:absolute;left: 0mm;top: 54mm;width:240mm;height: 35mm;font-family:'Arial','sans-serif';font-size: 12pt;line-height: 2.5;letter-spacing: 2.3pt;">
                 <div>
-                    <div style="display:inline-block;width: 12mm;border: 1px solid blue;"></div>
-                    <div style="display:inline-block;width: 40mm;border: 1px solid green;">
+                    <div style="display:inline-block;width: 20mm;"></div>
+                    <div style="display:inline-block;width: 40mm;">
                             <span t-field="o.invoice_date"/>
                     </div>
-                    <div style="display:inline-block;width: 110mm;border: 1px solid yellow;"></div>
-                    <div style="display:inline-block;width: 50mm;border: 1px solid blue;">
+                    <div style="display:inline-block;width: 110mm;"></div>
+                    <div style="display:inline-block;width: 50mm;">
                             <span t-field="o.partner_id.vat"/>
                     </div>
                 </div>
                 <div >
-                    <div style="display:inline-block;width: 12mm;padding-left: 0mm;border: 1px solid red;"/>
-                    <div style="display:inline-block;width: 200mm;padding-left: 0mm;border: 1px solid green;">
+                    <div style="display:inline-block;width: 20mm;padding-left: 0mm;"/>
+                    <div style="display:inline-block;width: 200mm;padding-left: 0mm;">
                             <span t-field="o.partner_id.name"/>
                     </div>
                 </div>
-                <div class="row">
-                    <div  style="display:inline-block;width: 20mm;padding-left: 0px;border: 1px solid black;"/>
-                    <div  style="display:inline-block;width: 130mm;padding-left: 0px;border: 1px solid green;">
+                <div>
+                    <div  style="display:inline-block;width: 28mm;padding-left: 0px;"/>
+                    <div  style="display:inline-block;overflow: hidden;width: 130mm;padding-left: 0px;">
                         <span t-field="o.partner_id.direccion"/>
                     </div>
-                    <div style="display:inline-block;width: 25mm;padding-left: 0px;border: 1px solid blue;"/>
-                    <div style="display:inline-block;width: 55mm;padding-left: 0px;border: 1px solid green;">
+                    <div style="display:inline-block;width: 25mm;padding-left: 0px;"/>
+                    <div style="display:inline-block;overflow: hidden;width: 50mm;padding-left: 0px;">
                         <span t-field="o.partner_id.phone"/><span t-field="o.partner_id.mobile"/>
                     </div>
                 </div>
@@ -77,8 +76,7 @@
             </xpath>
 
             <xpath expr='//table[@name="invoice_line_table"]' position="replace">
-                <div style="width:140mm; height:89mm"/>
-                <div  style="height:164mm;font-family:'Arial','sans-serif';font-size: 10pt;line-height: 2;letter-spacing: 2.3pt;">
+                <div  style="position:absolute;left: 0mm;top: 103mm;width:240mm;height:164mm;font-family:'Arial','sans-serif';font-size: 12pt;line-height: 2;letter-spacing: 2.3pt;">
                     <table name="invoice_line_table" >
                         <tbody >
                             <t t-set="current_subtotal" t-value="0"/>
@@ -92,7 +90,7 @@
                                             <span t-field="line.quantity"/>
                                         </td>
                                         <td style="width: 8mm;"/>
-                                        <td name="account_invoice_line_name" style="width: 95mm;"><span t-field="line.name"/></td>
+                                        <td name="account_invoice_line_name" style="display:inline-block;overflow: hidden;width: 125mm;"><span t-field="line.name"/></td>
                                         <t t-if="display_discount" >
                                             <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}" style="text-align: right;width: 17mm;">
                                                 <span class="text-nowrap" t-field="line.discount"/>
@@ -104,7 +102,7 @@
                                         <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}" style="text-align: right;width: 25mm;">
                                             <span class="text-nowrap" t-field="line.price_unit"/>
                                         </td>
-                                        <td class="text-right" style="width: 30mm;text-align: right;margin-right: 1px;padding-left: 1px;padding-right: 20px;border: 1px solid blue;">
+                                        <td class="text-right" style="width: 30mm;text-align: right;margin-right: 1px;padding-left: 1px;padding-right: 2px;">
                                             <span class="text-nowrap" t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
                                         </td>
                                     </t>
@@ -113,13 +111,12 @@
                         </tbody>
                     </table>
                 </div>
-                <div style="width: 140mm;height: 25mm;"/>
             </xpath>
             <xpath expr='//div[@id="total"]' position="replace">
-                <div id="total" style="font-family:'Arial','sans-serif';font-size: 10pt;line-height: 2;letter-spacing: 2.3pt;">
+                <div id="total" style="position:absolute;left: 0mm;top: 318mm;font-family:'Arial','sans-serif';font-size: 12pt;line-height: 2;letter-spacing: 2.3pt;">
                         <table >
                             <tr>
-                                <td style="width: 160mm;height: 7mm;"/>
+                                <td style="width: 190mm;height: 7mm;"/>
                                 <td class="text-right"  style="text-align: right;width: 35mm;height: 7mm;">
                                     <span t-field="o.amount_untaxed"/>
                                 </td>
@@ -127,13 +124,13 @@
                             <t t-foreach="o.amount_by_group" t-as="amount_by_group">
                                 <tr>
                                     <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) in [0, 1] and o.amount_untaxed == amount_by_group[2]">
-                                        <td class="text-right" style="text-align: right;width: 160mm;height: 7mm;"><span class="text-nowrap" t-esc="amount_by_group[0]"/></td>
+                                        <td class="text-right" style="text-align: right;width: 190mm;height: 7mm;"><span class="text-nowrap" t-esc="amount_by_group[0]"/></td>
                                         <td class="text-right" style="text-align: right;width: 35mm;height: 7mm;">
                                             <span class="text-nowrap" t-esc="amount_by_group[3]" />
                                         </td>
                                     </t>
                                     <t t-else="">
-                                        <td style="text-align: right;width: 160mm;height: 7mm;">
+                                        <td style="text-align: right;width: 190mm;height: 7mm;">
                                             <span t-esc="amount_by_group[0]"/>
                                             <span class="text-nowrap"> on
                                                 <t t-esc="amount_by_group[4]"/>
@@ -146,7 +143,7 @@
                                 </tr>
                             </t>
                             <tr>
-                                <td style="width: 160mm;height: 7mm;"/>
+                                <td style="width: 190mm;height: 7mm;"/>
                                 <td class="text-right" style="text-align: right;width: 35mm;height: 7mm;">
                                     <span class="text-nowrap" t-field="o.amount_total"/>
                                 </td>

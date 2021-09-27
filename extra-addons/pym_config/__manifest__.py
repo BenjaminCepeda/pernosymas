@@ -23,6 +23,7 @@
     'depends': ['contacts',
                 'l10n_ec',
                 "account",
+                "point_of_sale",
                 ],
     # always loaded
     'data': [
@@ -31,5 +32,13 @@
         'views/pym_report.xml',
         'views/account_move_view.xml',
         'views/view_out_invoice_tree.xml',
+        'templates/point_of_sale_assets.xml',
     ],
+    'qweb': [
+        'static/src/xml/Screens/PaymentScreen.xml',
+        'static/src/xml/Screens/ClientDetailsEdit.xml',
+    ],
+    'installable': True,
+    'auto_install': False,
+
 }

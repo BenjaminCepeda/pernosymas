@@ -43,17 +43,21 @@ class ResPartner(models.Model):
             if self.l10n_latam_identification_type_id == ced_vat_type:
                 mod9=pym_util.PymUtil.verificar(vat)
                 if not mod9:
-                    raise ValidationError(_('invalid ID number '))
+                    raise ValidationError(_('Numero de Identificación Incorrecta '))
             elif self.l10n_latam_identification_type_id == ruc_vat_type and \
                     vat != '9999999999999':
                 mod9= pym_util.PymUtil.verificar(vat)
                 if not mod9:
-                    raise ValidationError(_('invalid ID number '))
+                    raise ValidationError(_('Numero de Identificación Incorrecta '))
         return True
 
     def _get_direccion(self):
-        self.direccion = self.street + ' ' + self.street2
+        self.direccion = self.street
+        if self.street and self.street2:
+            self.direccion =  self.direccion + ' ' + self.street2
 
     country_id = fields.Many2one('res.country', string='Country',
                                  default=_get_default_country)
     direccion=fields.Char(compute=_get_direccion, string='Dirección completa')
+
+
