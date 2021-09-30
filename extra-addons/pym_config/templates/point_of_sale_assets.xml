@@ -6,6 +6,7 @@
             <script type="text/javascript" src="/pym_config/static/src/js/PaymentScreen.js"></script>
             <script type="text/javascript" src="/pym_config/static/src/js/ClientDetailsEdit.js"></script>
 
+
         </xpath>
     </template>
 </odoo>

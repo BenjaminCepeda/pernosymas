@@ -30,7 +30,7 @@
         </record>
 
     <template id="pym_config.custom_header">
-            <div style="position:absolute;left: 0mm;top: 54mm;width:240mm;height: 35mm;font-family:'Arial','sans-serif';font-size: 12pt;line-height: 2.5;letter-spacing: 2.3pt;">
+            <div style="position:absolute;left: 0mm;top: 62mm;width:240mm;height: 35mm;font-family:'Arial','sans-serif';font-size: 12pt;line-height: 2.5;letter-spacing: 2.3pt;">
                 <div>
                     <div style="display:inline-block;width: 20mm;"></div>
                     <div style="display:inline-block;width: 40mm;">
@@ -76,7 +76,7 @@
             </xpath>
 
             <xpath expr='//table[@name="invoice_line_table"]' position="replace">
-                <div  style="position:absolute;left: 0mm;top: 103mm;width:240mm;height:164mm;font-family:'Arial','sans-serif';font-size: 12pt;line-height: 2;letter-spacing: 2.3pt;">
+                <div  style="position:absolute;left: 0mm;top: 110mm;width:240mm;height:164mm;font-family:'Arial','sans-serif';font-size: 12pt;line-height: 2;letter-spacing: 2.3pt;">
                     <table name="invoice_line_table" >
                         <tbody >
                             <t t-set="current_subtotal" t-value="0"/>
@@ -113,7 +113,7 @@
                 </div>
             </xpath>
             <xpath expr='//div[@id="total"]' position="replace">
-                <div id="total" style="position:absolute;left: 0mm;top: 318mm;font-family:'Arial','sans-serif';font-size: 12pt;line-height: 2;letter-spacing: 2.3pt;">
+                <div id="total" style="position:absolute;left: 0mm;top: 319mm;font-family:'Arial','sans-serif';font-size: 12pt;line-height: 2;letter-spacing: 2.3pt;">
                         <table >
                             <tr>
                                 <td style="width: 190mm;height: 7mm;"/>
